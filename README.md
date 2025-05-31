@@ -156,10 +156,7 @@ $config = [
 
 ## Example Images
 
-*(Placeholder: You can add screenshots of your dashboard here)*
-
-```
-```
+![](outbound_usage.png)
 
 ## Dependencies
 
