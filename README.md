@@ -154,7 +154,7 @@ $config = [
     * **`monthlyBreakdown.sparklines.colors`**: Colors for sparkline borders and backgrounds in light/dark modes.
 * **`chartThemeColors`**: Defines the base colors for Chart.js elements like axes, grid lines, and labels for both light and dark themes.
 
-## Example Images
+## Example 
 
 ![](outbound_usage.png)
 
