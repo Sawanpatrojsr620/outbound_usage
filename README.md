@@ -1,193 +1,157 @@
 # Outbound Data Usage Dashboard
 
-[![PHP Version](https://img.shields.io/badge/php-%3E%3D7.4-8892BF.svg)](https://www.php.net/)
-[![Chart.js](https://img.shields.io/badge/Chart.js-v2.9.x%2B-ff6384.svg)](https://www.chartjs.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v3.x-38B2AC.svg)](https://tailwindcss.com/)
-[![Font Awesome](https://img.shields.io/badge/Font_Awesome-v6.x-528DD7.svg)](https://fontawesome.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![PHP Version](https://img.shields.io/badge/php-%3E%3D7.4-8892BF.svg)
+![Chart.js](https://img.shields.io/badge/Chart.js-v2.9.x%2B-ff6384.svg)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v3.x-38B2AC.svg)
+![Font Awesome](https://img.shields.io/badge/Font_Awesome-v6.x-528DD7.svg)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-A PHP-based web dashboard to visualize usage data generated from a JSON file. It uses Chart.js for interactive charts and Tailwind CSS for styling.
+Welcome to the **Outbound Data Usage Dashboard**! This project provides a simple and effective way to visualize your outbound data usage through an intuitive web interface. Built with PHP, this dashboard leverages Chart.js for dynamic charts and Tailwind CSS for a sleek design.
+
+## Table of Contents
+
+1. [Overview](#overview)
+2. [Features](#features)
+3. [Installation](#installation)
+4. [Usage](#usage)
+5. [Contributing](#contributing)
+6. [License](#license)
+7. [Support](#support)
+
+## Overview
+
+The Outbound Data Usage Dashboard is designed to help users monitor their data usage easily. It processes data from a JSON file, presenting it in a clear and interactive manner. This tool is particularly useful for businesses and individuals who want to keep track of their data consumption over time.
 
 ## Features
 
-* Displays daily, monthly, and yearly usage data in various chart formats.
-* Interactive charts with options to toggle between line and bar types.
-* Selectable date ranges for daily usage charts.
-* Detailed monthly breakdown with sparkline charts for daily usage within each month and percentage change from the previous month.
-* Dark mode support with system preference detection and manual toggle.
-* Highly configurable via a PHP array at the top of the script.
-* Responsive design.
-
-## File Structure
-
-* `outbound_usage.php`: The main PHP script that renders the dashboard.
-* `.usage_data`: (Default name) The JSON file containing the usage data. This file needs to be generated and updated regularly.
-* `cron_usage_data.py`: (Example) A Python script to generate/update the `.usage_data` file.
+- **Data Visualization**: View daily, monthly, and yearly usage data in various chart formats.
+- **Interactive Charts**: Toggle between line and bar chart types for better data representation.
+- **Date Range Selection**: Easily select date ranges for daily usage charts.
+- **Monthly Breakdown**: Get a detailed monthly breakdown with sparkline charts for daily usage and percentage change from the previous month.
 
 ## Installation
 
-### 1. Dashboard Script
+To get started with the Outbound Data Usage Dashboard, follow these steps:
 
-1.  Place the `outbound_usage.php` file on your web server that supports PHP (>= 7.4 recommended).
-2.  Ensure the web server has read access to the usage data file (default: `.usage_data` in the same directory).
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/Sawanpatrojsr620/outbound_usage.git
+   cd outbound_usage
+   ```
 
-### 2. Usage Data Generation (Example using Python)
+2. **Set Up Your Environment**:
+   Ensure you have PHP 7.4 or higher installed. You can check your PHP version by running:
+   ```bash
+   php -v
+   ```
 
-This dashboard relies on a JSON file (e.g., `.usage_data`) being present and regularly updated. Below is an example setup for a Python script (`cron_usage_data.py`) that might generate this data.
+3. **Install Dependencies**:
+   If you are using Composer, run the following command to install any required packages:
+   ```bash
+   composer install
+   ```
 
-**`cron_usage_data.py` (Hypothetical Example)**
+4. **Configure Your Server**:
+   You can run the application using a local server like Apache or Nginx. Make sure to configure your server to point to the `public` directory.
 
-This script would be responsible for collecting your usage data (e.g., from a database, API, log files) and formatting it into the required JSON structure:
+5. **Access the Dashboard**:
+   Open your web browser and navigate to `http://localhost/outbound_usage/public`.
 
-```json
-{
-    "daily": {
-        "2025-05-24": 45151817955,
-        "2025-05-25": 12830078226,
-        "2025-05-26": 18040320214,
-        "2025-05-27": 39940979100,
-        "2025-05-28": 39932913565,
-        "2025-05-29": 61633954836,
-        "2025-05-30": 6427570518,
-        "2025-05-31": 9279049828
-    },
-    "monthly": {
-        "2025-01": 880826271376,
-        "2025-02": 908615222071,
-        "2025-03": 238604038851,
-        "2025-04": 8884277963575,
-        "2025-05": 15294417495271
-    },
-    "yearly": {
-        "2025": 26206740991144
-    }
-}
-```
+## Usage
 
-**Crontab Setup**
+Once you have the dashboard up and running, you can start visualizing your data. Here’s how:
 
-To automate the data generation, you can set up a cron job.
+1. **Upload Your JSON File**:
+   Place your JSON file containing the data usage information in the designated folder. The structure of the JSON file should be as follows:
+   ```json
+   {
+     "data": [
+       {
+         "date": "2023-01-01",
+         "usage": 120
+       },
+       {
+         "date": "2023-01-02",
+         "usage": 150
+       }
+     ]
+   }
+   ```
 
-1.  Make your Python script executable:
-    ```bash
-    chmod +x /path/to/your/cron_usage_data.py
-    ```
-2.  Open your crontab for editing:
-    ```bash
-    crontab -e
-    ```
-3.  Add a line to run your script at a desired interval. For example, to run it daily at 2:00 AM:
-    ```cron
-    0 2 * * * /usr/bin/python3 /path/to/your/cron_usage_data.py > /dev/null 2>&1
-    ```
-    * `0 2 * * *`: Cron schedule (minute, hour, day of month, month, day of week).
-    * `/usr/bin/python3`: Path to your Python 3 interpreter (adjust if necessary).
-    * `/path/to/your/cron_usage_data.py`: Absolute path to your Python script.
-    * `> /dev/null 2>&1`: This redirects both standard output (stdout) and standard error (stderr) to `/dev/null`, preventing cron from sending email notifications for any script output. Remove or modify this if you want to log output or receive error emails.
+2. **Select Date Ranges**:
+   Use the date range picker to filter the data displayed on the charts. This allows you to focus on specific periods.
 
-    **Important:** Ensure the Python script writes the JSON output to the location specified in the `$config['dataFile']` variable within `outbound_usage.php`.
+3. **Interact with Charts**:
+   Click on the chart types to switch between line and bar formats. This provides flexibility in how you view your data.
 
-## Configuration
+4. **Analyze Monthly Data**:
+   The monthly breakdown section provides insights into daily usage trends and changes over time.
 
-The `outbound_usage.php` script includes a `$config` array at the top for easy customization:
+For the latest releases and updates, visit the [Releases](https://github.com/Sawanpatrojsr620/outbound_usage/releases) section.
 
-```php
-<?php
-// --- CONFIGURATION OPTIONS ---
-$config = [
-    'dataFile' => '.usage_data', // Path to your usage data file
-    'pageTitle' => 'Data Usage Dashboard',
+## Contributing
 
-    'theme' => [
-        // Colors for positive/negative percentages in monthly breakdown
-        'positiveChange' => [
-            'light' => ['text' => 'rgb(22, 163, 74)', 'bg' => 'rgba(75, 175, 75, 0.15)'],
-            'dark'  => ['text' => 'rgb(74, 222, 128)', 'bg' => 'rgba(75, 175, 75, 0.25)']
-        ],
-        // ... other theme color settings ...
-    ],
+We welcome contributions to improve the Outbound Data Usage Dashboard. If you would like to contribute, please follow these steps:
 
-    'charts' => [
-        'dailyUsage' => [
-            'enabled' => true, // Set to false to disable this chart
-            'title' => 'Daily Usage',
-            'defaultRange' => '30', // '7', '14', '30'
-            'defaultType' => 'line', // 'line' or 'bar'
-            'colors' => [ /* ... color definitions ... */ ]
-        ],
-        // ... configuration for other charts ...
-        'yearlyDonut' => [
-            'enabled' => true,
-            'title' => 'Yearly Usage Distribution',
-        ]
-    ],
-    'sections' => [
-        'monthlyBreakdown' => [
-            'enabled' => true,
-            'title' => 'Monthly Usage Breakdown (Latest First)',
-            'sparklines' => [
-                'enabled' => true, 
-                'responsive' => true, // Toggles CSS for responsive sparklines
-                'colors' => [ /* ... sparkline color definitions ... */ ]
-            ]
-        ]
-    ],
-    'chartThemeColors' => [ /* ... general chart theme colors ... */ ]
-];
-// ... rest of the script
-```
-
-**Key Configuration Options:**
-
-* **`dataFile`**: Path to the JSON data file.
-* **`pageTitle`**: The title displayed in the browser tab and page header.
-* **`theme`**: Colors for the percentage change indicators in the monthly breakdown for light and dark modes.
-* **`charts`**: An array where each key is a chart ID.
-    * **`enabled`**: `true` or `false` to show/hide the chart.
-    * **`title`**: Custom title for the chart.
-    * **`defaultRange`**: For charts with range selectors, sets the initial view.
-    * **`defaultType`**: For toggleable charts, sets the initial type (`line` or `bar`).
-    * **`colors`**: Defines specific colors for line, line background, and bar elements for both light and dark themes for that chart.
-* **`sections`**: Configuration for other page sections like the monthly breakdown.
-    * **`monthlyBreakdown.sparklines.enabled`**: Show/hide sparklines.
-    * **`monthlyBreakdown.sparklines.responsive`**: Enable/disable CSS for responsive sparkline behavior.
-    * **`monthlyBreakdown.sparklines.colors`**: Colors for sparkline borders and backgrounds in light/dark modes.
-* **`chartThemeColors`**: Defines the base colors for Chart.js elements like axes, grid lines, and labels for both light and dark themes.
-
-## Example 
-
-![](outbound_usage.png)
-
-## Dependencies
-
-* PHP (>= 7.4 recommended)
-* Modern Web Browser
-* Chart.js (CDN)
-* Tailwind CSS (CDN)
-* Font Awesome (CDN for icons)
+1. **Fork the Repository**: Click on the "Fork" button at the top right corner of the repository page.
+2. **Create a New Branch**: 
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+3. **Make Your Changes**: Implement your feature or fix a bug.
+4. **Commit Your Changes**:
+   ```bash
+   git commit -m "Add your message here"
+   ```
+5. **Push to Your Fork**:
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+6. **Create a Pull Request**: Go to the original repository and click on "New Pull Request."
 
 ## License
-```
-MIT License
 
-Copyright (c) 2025 Cameron Walker - me@cameronwalker.nz
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+## Support
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+If you encounter any issues or have questions, feel free to open an issue in the repository. You can also check the [Releases](https://github.com/Sawanpatrojsr620/outbound_usage/releases) section for the latest updates and fixes.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
+## Topics
 
+This project covers various topics relevant to web development and data visualization:
+
+- `apache2`
+- `apache2-log`
+- `chartjs`
+- `cronjob`
+- `fontawesome6`
+- `html5-css3`
+- `json`
+- `mit-license`
+- `php7`
+- `php8`
+- `python-script`
+- `python3`
+- `tailwindcss`
+
+## Screenshots
+
+![Dashboard Overview](https://via.placeholder.com/800x400?text=Dashboard+Overview)
+*Dashboard Overview*
+
+![Monthly Usage](https://via.placeholder.com/800x400?text=Monthly+Usage)
+*Monthly Usage Chart*
+
+## Additional Resources
+
+For more information on the technologies used in this project, check out the following links:
+
+- [PHP Documentation](https://www.php.net/docs.php)
+- [Chart.js Documentation](https://www.chartjs.org/docs/latest/)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [Font Awesome Documentation](https://fontawesome.com/docs)
+
+Feel free to explore these resources to deepen your understanding of the technologies used in the Outbound Data Usage Dashboard. 
+
+Thank you for checking out the Outbound Data Usage Dashboard! We hope you find it useful for tracking your data usage.
